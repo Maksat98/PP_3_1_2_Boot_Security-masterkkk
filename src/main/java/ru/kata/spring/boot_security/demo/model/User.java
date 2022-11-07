@@ -1,12 +1,13 @@
 package ru.kata.spring.boot_security.demo.model;
 
+
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import javax.persistence.Entity;
+
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -22,11 +23,11 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
 
     public User() {
@@ -80,11 +81,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRole(Set<Role> roles) {
         this.roles = roles;
     }
 

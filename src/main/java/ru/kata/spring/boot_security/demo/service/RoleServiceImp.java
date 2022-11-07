@@ -17,7 +17,6 @@ public class RoleServiceImp implements RoleService {
         this.roleRepository = roleRepository;
     }
 
-    @Transactional
     @Override
     public List<Role> allRoles() {
         return (List<Role>)roleRepository.findAll();
