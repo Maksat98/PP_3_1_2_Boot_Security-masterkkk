@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,15 +29,17 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
 
-    public User() {
-    }
-
-    public User(String name, String lastName, String email, String password) {
+    public User(String name, String lastName, int i, String email, String password) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
+
+    public User() {
+
+    }
+
 
     public Long getId() {
         return id;
@@ -117,5 +118,24 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, lastName, id, email, password, roles);
+    }
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
